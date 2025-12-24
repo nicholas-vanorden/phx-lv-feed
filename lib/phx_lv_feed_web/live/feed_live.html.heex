@@ -1,0 +1,32 @@
+<div>
+    <p class="text-sm text-gray-600 mb-4">
+        Online (<%= length(@users) %>):
+        <%= Enum.join(@users, ", ") %>
+    </p>
+</div>
+<div class="max-w-xl mx-auto mt-10">
+    <h1 class="text-xl font-bold mb-4">
+        Live Feed - <%= @name %>
+    </h1>
+
+    <%= for msg <- @messages do %>
+        <div class="mb-2">
+            <%= if Map.get(msg, :system, false) do %>
+                <em class="text-gray-500 text-sm"><%= msg.body %></em>
+            <% else %>
+                <strong><%= msg.name %>:</strong>
+                <%= msg.body %>
+            <% end %>
+        </div>
+    <% end %>
+
+    <.form for={%{}} phx-submit="post" phx-change="change">
+        <input
+            type="text"
+            name="body"
+            value={@message}
+            placeholder="Say something..."
+            class="border px-3 py-2 w-full mt-4"
+        />
+    </.form>
+</div>
